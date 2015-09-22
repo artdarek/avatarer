@@ -1,11 +1,11 @@
 {
     "name": "artdarek/toastr",
-    "description": "Avatarer - User Avatar Library",
+    "description": "Avatarer - Social media avatars for Laravel 5",
     "keywords": [
         "Avatarer",
         "Avatar",
         "Gravatar",
-        "Laravel 5",
+        "Laravel 5"
     ],
     "homepage": "https://github.com/artdarek/avatarer",
     "license": "MIT",
