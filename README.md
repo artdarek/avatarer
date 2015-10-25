@@ -88,7 +88,7 @@ and similar for Facebook avatar:
 	$userID = "838979896180389";
 
 	// create a gravatar object for specified email
- 	$avatar = Avatarer::driver('Facebook')->user( $$userID );
+ 	$avatar = Avatarer::driver('Facebook')->user( $userID );
 
 	 // get gravatar url as a string
 	$url = $avatar->url();
