@@ -1,6 +1,6 @@
 # Avatarer - Social media avatars for Laravel 5
 
-Easy get avatars from social services like facebook and gravatar Flash Messages for Laravel 5
+Easy get avatars from social services like Facebook.com and Gravatar.com for Laravel 5
 
 ---
 
