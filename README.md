@@ -175,11 +175,11 @@ by passing array with parameters to ``make()`` method:
 	$email = "example@user.email";
 
 	// create a gravatar object in specified size
- 	$url = Avatarer::driver('Gravatar')->make( ['email' => $email, 'size' => 220] )->url();
+ 	$url = Avatarer::driver('Gravatar')->make( ['id' => $email, 'size' => 220] )->url();
 
 	// create a gravatar object with some other additional parameters
  	$url = Avatarer::driver('Gravatar')->make( [
- 		'email' => $email,
+ 		'id' => $email,
  		'size' => 220,
  		'defaultImage' => 'mm',
  		'rating' => 'g',
