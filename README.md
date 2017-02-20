@@ -1,6 +1,7 @@
 # Avatarer - Social media avatars for Laravel 5
 
-Easy get avatars from social services like Facebook.com and Gravatar.com for Laravel 5
+Easy get avatars from social services like Facebook.com and Gravatar.com 
+- initially package was build for Laravel 5 but it can work as standalone library too.
 
 ---
 
