@@ -36,17 +36,8 @@ class Twitter extends AvatarAbstract implements AvatarInterface {
 	protected function make()
 	{
 
-	    // size map
-	    $sizesMap = ['mini' => 24, 'normal' => 48, 'bigger' => 96, 'original' => 128];
-	    $mappedSize = 'mini';
-	    foreach($sizesMap as $k=>$v) {
-			if ($this->_size['width'] >= $v) { 
-				$mappedSize = $k; 
-			} 
-	    }
-
 	    // size
-	    $params['size'] = ($this->_options['size'] !== null) ? $this->_options['size'] : $mappedSize;
+	    $params['size'] = ($this->_options['size'] !== null) ? $this->_options['size'] : $this->_size_mapper();
 
 	    // remove array elements with empty value
 		$params = array_diff($params, ['']);
@@ -61,6 +52,22 @@ class Twitter extends AvatarAbstract implements AvatarInterface {
 
 	    // return url
     	return $this;
+	}
+
+	/**
+	 * [_size_mapper description]
+	 * @return [type] [description]
+	 */
+	private function _size_mapper() {
+		// size map
+	    $sizesMap = ['mini' => 24, 'normal' => 48, 'bigger' => 96, 'original' => 128];
+	    $mappedSize = 'mini';
+	    foreach($sizesMap as $k=>$v) {
+			if ($this->_size['width'] >= $v) { 
+				$mappedSize = $k; 
+			} 
+	    }
+	    return $mappedSize;
 	}
 
 }
