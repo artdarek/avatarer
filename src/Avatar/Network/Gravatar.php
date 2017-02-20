@@ -38,6 +38,7 @@ class Gravatar extends AvatarAbstract implements AvatarInterface {
 	{
 	    // size
 	    $params['s'] = ($this->_size['width'] !== null) ? $this->_size['width'] : '';
+	    
 	    // ratings
 	    $params['r'] = ($this->_options['ratings'] !== null) ? $this->_options['ratings'] : '';
 	    // default
