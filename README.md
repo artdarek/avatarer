@@ -24,7 +24,7 @@ Add package to your composer.json file:
 
 ```
 "require": {
-  "artdarek/avatarer": "dev-master"
+  "artdarek/avatarer": "1.0.*"
 }
 ```
 
