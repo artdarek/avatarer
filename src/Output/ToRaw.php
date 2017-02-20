@@ -11,7 +11,7 @@ class ToRaw implements OutputInterface {
 	 * @param  array $attributes
 	 * @return string
 	 */
-	public function generate($url, array $attributes = []) 
+	public function generate($url) 
 	{
         // return
     	return $url;

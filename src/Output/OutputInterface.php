@@ -11,6 +11,6 @@ interface OutputInterface {
 	 * @param  array $attributes
 	 * @return mixed
 	 */
-	public function generate($url, array $attributes = []);
+	public function generate($url);
 
 }

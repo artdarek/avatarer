@@ -11,7 +11,7 @@ class ToArray implements OutputInterface {
 	 * @param  array $attributes
 	 * @return array
 	 */
-	public function generate($url, array $attributes = []) 
+	public function generate($url) 
 	{
 		$output = parse_url($url);
 

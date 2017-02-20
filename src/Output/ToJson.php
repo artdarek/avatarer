@@ -11,7 +11,7 @@ class ToJson implements OutputInterface {
 	 * @param  array $attributes
 	 * @return array
 	 */
-	public function generate($url, array $attributes = []) 
+	public function generate($url) 
 	{
 		$output = json_encode ( parse_url($url) );
 
