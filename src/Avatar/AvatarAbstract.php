@@ -2,6 +2,8 @@
 
 namespace Artdarek\Avatarer\Avatar;
 
+use \Artdarek\Avatarer\Output\OutputInterface;
+
 abstract class AvatarAbstract implements AvatarInterface {
 
 	/**
@@ -81,10 +83,13 @@ abstract class AvatarAbstract implements AvatarInterface {
 	 *
 	 * @return string
 	 */
-	public function get()
+	public function get(OutputInterface $output = null)
 	{
+		if ($output !== null) $url = $output->generate($this->_url);
+		else $url = $this->_url;
+
 		// return avatar
-		return $this->_url;
+		return $url;
 	}
 
 	/**
