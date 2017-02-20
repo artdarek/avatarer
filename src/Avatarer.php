@@ -13,7 +13,7 @@ class Avatarer {
 	 * @param  string $driver
 	 * @return Driver
 	 */
-	public function driver( $driver )
+	public function make( $driver )
 	{
 		$this->setDriver( $driver );
 		$this->createDriverInstance();
@@ -38,7 +38,7 @@ class Avatarer {
 	 */
 	public function createDriverInstance() 
 	{
-		$driverClass = __NAMESPACE__ . '\\Driver\\'.$this->_driver;
+		$driverClass = __NAMESPACE__ . '\\Avatar\\Network\\'.$this->_driver;
 		$this->_avatarer = new $driverClass;
 	}
 
