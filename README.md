@@ -4,8 +4,8 @@ Easy get avatars from social services like Facebook.com and Gravatar.com for Lar
 
 ---
 
-- [Installation](#installation)
 - [Supported Providers](#supported-providers)
+- [Installation](#installation)
 - [Registering the Package](#registering-the-package)
 - [Usage](#usage)
 - [Output Formating](#output-formating)
