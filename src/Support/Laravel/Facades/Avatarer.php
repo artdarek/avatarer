@@ -1,6 +1,6 @@
 <?php 
 
-namespace Artdarek\Avatarer\Facades;
+namespace Artdarek\Avatarer\Support\Laravel\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
