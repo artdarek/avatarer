@@ -4,42 +4,52 @@ namespace Artdarek\Avatarer;
 
 class Avatarer {
 
-	private $_driver = 'Gravatar';
+	/**
+	 * Provider name
+	 * @var string
+	 */
+	private $_provider = 'Gravatar';
+
+	/**
+	 * Avatarer instance
+	 * @var \Artdarek\Avatarer\Avatar\AvatarInterface
+	 */
 	private $_avatarer;
 
 	/** 
-	 * Return avatarer driver instance
+	 * Make avatarer provider instance
 	 *
-	 * @param  string $driver
-	 * @return Driver
+	 * @param  string $provider
+	 * @return \Artdarek\Avatarer\Avatar\AvatarInterface
 	 */
-	public function make( $driver )
+	public function make( $provider )
 	{
-		$this->setDriver( $driver );
-		$this->createDriverInstance();
+		$this->setProvider( $provider );
+		$this->createProviderInstance();
 
 	    // return
     	return $this->_avatarer;
 	}
 
 	/**
-	 * Set Driver name
-	 * @param [type] $driver [description]
+	 * Set provider name
+	 * 
+	 * @param string $provider
 	 */
-	public function setDriver( $driver ) 
+	public function setProvider( $provider ) 
 	{
-		$this->_driver = $driver;
+		$this->_provider = $provider;
 	}
 
 	/**
-	 * Create avatarer driver instance
-	 * @param  string $name 
-	 * @return Driver
+	 * Create avatarer provider instance
+	 * 
+	 * @return \Artdarek\Avatarer\Avatar\AvatarInterface
 	 */
-	public function createDriverInstance() 
+	public function createProviderInstance() 
 	{
-		$driverClass = __NAMESPACE__ . '\\Avatar\\Network\\'.$this->_driver;
-		$this->_avatarer = new $driverClass;
+		$providerClass = __NAMESPACE__ . '\\Avatar\\Network\\'.$this->_provider;
+		$this->_avatarer = new $providerClass;
 	}
 
 
