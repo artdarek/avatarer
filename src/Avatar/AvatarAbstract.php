@@ -4,7 +4,7 @@ namespace Artdarek\Avatarer\Avatar;
 
 use \Artdarek\Avatarer\Output\OutputInterface;
 
-abstract class AvatarAbstract implements AvatarInterface {
+abstract class AvatarAbstract {
 
 	/**
 	 * User id
@@ -47,7 +47,6 @@ abstract class AvatarAbstract implements AvatarInterface {
 	public function user( $id )
 	{
 		$this->_id = $id;
-		$this->make();
 		return $this;
 	}
 	
@@ -59,9 +58,7 @@ abstract class AvatarAbstract implements AvatarInterface {
 	 */
 	public function size($width = 200, $height = null)
 	{
-		$this->_size['width'] = $width;
-		$this->_size['height'] = $height;
-		$this->make();		
+		$this->_size = ['width' => $width, 'height'=> $height];
 		return $this;
 	}
 
@@ -74,7 +71,6 @@ abstract class AvatarAbstract implements AvatarInterface {
 	public function options( array $options = [] )
 	{
 		$this->_options = array_merge($this->_options,$options);
-		$this->make();
 		return $this;
 	}
 
@@ -85,6 +81,10 @@ abstract class AvatarAbstract implements AvatarInterface {
 	 */
 	public function get(OutputInterface $output = null)
 	{
+		// make avatar url
+		$this->make();
+
+		// generate output
 		if ($output !== null) $url = $output->generate($this->_url);
 		else $url = $this->_url;
 
