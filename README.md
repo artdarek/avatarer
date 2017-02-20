@@ -24,7 +24,7 @@ Add package to your composer.json file:
 
 ```
 "require": {
-  "artdarek/avatarer": "1.0.*"
+  "artdarek/avatarer": "2.0.*"
 }
 ```
 
@@ -40,7 +40,7 @@ Add the Avatarer alias into your config file ``config/app.php``:
 
 ```php
 'aliases' => [
-    'Avatarer'    => Artdarek\Avatarer\Facades\Avatarer::class,
+    'Avatarer'    => Artdarek\Avatarer\Support\Laravel\Facades\Avatarer::class,
 ],
 ```
 
@@ -48,170 +48,235 @@ Add the Avatarer alias into your config file ``config/app.php``:
 
 #### Initialize
 
-To ninitialize avatarer call driver() method:
+To ninitialize avatarer call make() method:
 
 ```php
 <?php
 
 	// create avatarer object using Gravatar driver
- 	$gravatarAvatar = Avatarer::driver('Gravatar');
+ 	$gravatarAvatar = Avatarer::make('Gravatar');
 
 	// create avatarer object using Facebook driver
- 	$facebookAvatar = Avatarer::driver('Facebook');
+ 	$facebookAvatar = Avatarer::make('Facebook');
+
+	// create avatarer object using Twitter driver
+ 	$twitterAvatar = Avatarer::make('Twitter');
 ?>
 ```
 
-#### Generating avatar url by user() method
+#### Setting a user
 
 Generating avatar with default settings is very simple and all you have to do is to call
-``user()`` method with user email as a paramterer:
+``user()`` method with user id as a parameter (can be email/id/screenname):
+
+For Gravatar we use Email:
 
 ```php
 <?php
 	// user email
 	$email = "example@user.email";
 
-	// create a gravatar object for specified email
- 	$avatar = Avatarer::driver('Gravatar')->user( $email );
+	// create avatarer object
+ 	$avatar = Avatarer::make('Gravatar');
+ 	$avatar->user( $email );
 
-	 // get gravatar url as a string
-	$url = $avatar->url();
+	// get url
+	$url = $avatar->get();
 
 ?>
 ```
 
-and similar for Facebook avatar:
+For Facebook we use UserID:
 
 ```php
 <?php
 	// user id
 	$userID = "838979896180389";
 
+	// create avatarer object
+ 	$avatar = Avatarer::make('Facebook');
+ 	$avatar->user( $userID );
+
+	// get url
+	$url = $avatar->get();
+?>
+```
+
+For Twitter we use user ScreenName:
+
+```php
+<?php
+	// user id
+	$userScreenName = "artdarek";
+
+	// create avatarer object
+ 	$avatar = Avatarer::make('Twitter');
+ 	$avatar->user( $userScreenName );
+
+	// get url
+	$url = $avatar->get();
+?>
+```
+
+#### Setting avatar size
+
+If you want to set a size of avatar that should be returned you can use ``size()`` method.
+This method can take two parameters ``width`` and ``height`` and both are optional 
+(notice that not ll services will require or use both width and height, for example 
+Gravatar expects only width).
+
+For Gravatar:
+
+```php
+<?php
 	// create a gravatar object for specified email
- 	$avatar = Avatarer::driver('Facebook')->user( $userID );
+ 	$avatar = Avatarer::make('Gravatar');
+ 	$avatar->user( $email );
+ 	$avatar->size( 200 );
 
-	 // get gravatar url as a string
-	$url = $avatar->url();
+	// get url
+	$url = $avatar->get();
 ?>
 ```
 
-
-If you want to customize avatar a little bit you can set some more parameters using additional methods
-like ``size()``, ``rating()``, ``defaultImage()``.
+For Facebook:
 
 ```php
 <?php
-	// user email
-	$email = "example@user.email";
-
-	// create a gravatar object for specified email with additional settings
- 	$avatar = Avatarer::driver('Gravatar')->user( $email );
-
- 	// Size in pixels, defaults to 80px [ 1 - 2048 ]
-	$avatar->size('220');
-
-	// Maximum rating (inclusive) [ g | pg | r | x ]
-	// defaults to 'g'
-	$avatar->rating('g');
-
-	// Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
-	// You can also specify url to your own default avatar image
-	// defaults to 'mm'
-	$avatar->defaultImage('mm');
-
-    // set Avatarer to build urls with https [true = use https, false = ise http]
-    // defaults to 'false'
-    $avatar->secured( true );
-
-	// get gravatar url as a string
-	$url = $avatar->url();
-
-?>
-```
-
-U can also chain all methods:
-
-```php
-<?php
- 	$url = Avatarer::driver('Gravatar')->user( $email )->size('220')->rating('g')->defaultImage('mm')->url();
-?>
-```
-
-
-#### Generating avatar url by make() method
-
-Basic way to generate avatar url is just to call ``make()`` method with
-user email address as a parameter (all other parameters will be loaded from defaults).
-
-```php
-<?php
-	// user email
-	$email = "example@user.email";
-
 	// create a gravatar object for specified email
- 	$avatar = Avatarer::driver('Gravatar')->make( $email );
+ 	$avatar = Avatarer::make('Facebook');
+ 	$avatar->user( $userID );
+ 	$avatar->size( 200, 200 );
 
-	 // get gravatar url as a string
-	$url = $avatar->url();
-
+	// get url
+	$url = $avatar->get();
 ?>
 ```
 
-U can aslo chain methods:
+#### Setting provider-specific options
+
+If you want to customize avatar a little bit more you can set some additional parameters 
+using ``options()`` method.
+
+For Gravatar:
 
 ```php
 <?php
-	// to get url string
-	$url = Avatarer::driver('Gravatar')->make( $email )->url();
+	// create a gravatar object for specified email
+ 	$avatar = Avatarer::make('Gravatar');
+ 	$avatar->user( $email );
+ 	$avatar->size( 200 );
+ 	$avatar->options([
+		'default' => 'mm', // Url to your default avatar image or [ 404 | mm | identicon | monsterid | wavatar | blank | retro ]
+		'forceDefault' => null, // If for some reason you wanted to force the default image to always load [ y ]
+		'ratings' => 'g', // Maximum rating (inclusive) [ g | pg | r | x ]
+ 	]);
+
+	// get url
+	$url = $avatar->get();
 ?>
 ```
 
-If you want specify size of avatar or some other additional parameters you can do this
-by passing array with parameters to ``make()`` method:
+For Facebook:
 
 ```php
 <?php
-	// user email
-	$email = "example@user.email";
+	// create a gravatar object for specified email
+ 	$avatar = Avatarer::make('Facebook');
+ 	$avatar->user( $userID );
+ 	$avatar->size( 200, 200 );
+ 	$avatar->options([
+ 		'type' => 'square', // Type of avatar [ small, normal, album, large, square ]
+ 	]);
 
-	// create a gravatar object in specified size
- 	$url = Avatarer::driver('Gravatar')->make( ['id' => $email, 'size' => 220] )->url();
+	// get url
+	$url = $avatar->get();
+?>
+```
+#### Methods chaining
 
-	// create a gravatar object with some other additional parameters
- 	$url = Avatarer::driver('Gravatar')->make( [
- 		'id' => $email,
- 		'size' => 220,
- 		'defaultImage' => 'mm',
- 		'rating' => 'g',
- 	    'secured' => true
- 	])->url();
+If thats more convinient for you you can chain all methods like below:
+
+```php
+<?php
+ 	$url = Avatarer::make('Gravatar')
+ 		->user( $email )
+ 		->size(220)
+ 		->options([
+			'default' => 'mm'
+			'ratings' => 'g'
+ 		])->get();
 ?>
 ```
 
+#### Formating output
 
-#### Generating HTM avatar code
-
-With Avatarer you can get url string of user avatar by calling ``url()`` method
-but also you can generate full html <img> code by calling ``html()`` method instead of ``url()``.
+With Avatarer by using ``get()`` method you can get url string of user avatar:
 
 ```php
 <?php
-	// user email
-	$email = "example@user.email";
-
 	// create some Avatarer object
- 	$avatar = Avatarer::driver('Gravatar')->user( $email )->size('120');
-
-	 // get gravatar <img> html code
-	$html = $avatar->html();
+ 	$avatar = Avatarer::make('Gravatar')->user( $email )->size('200');
+	$url = $avatar->get();
 ?>
 ```
 
-If you want to have more controll over
-the returned html code you can pass some additional html attributes to html() method, for examle:
+But if you want to get output in different format like Array, Json or even HTML code
+you can do that by calling ``get()`` method with Output object that implements 
+OutputInterface as a parameter:
+
+To get Array:
 
 ```php
 <?php
-	$html = Avatarer::driver('Gravatar')->user( $email )->html( ['class' => 'avatar', 'id' => 'user123' ] );
+	// create some Avatarer object
+ 	$avatar = Avatarer::make('Gravatar')->user( $email )->size('200');
+	$url = $avatar->get(new ToArray);
+?>
+```
+
+To get JSON:
+
+```php
+<?php
+	// create some Avatarer object
+ 	$avatar = Avatarer::make('Gravatar')->user( $email )->size('200');
+	$url = $avatar->get(new ToJson);
+?>
+```
+
+To get Object:
+
+```php
+<?php
+	// create some Avatarer object
+ 	$avatar = Avatarer::make('Gravatar')->user( $email )->size('200');
+	$url = $avatar->get(new ToObject);
+?>
+```
+
+To get HTML:
+
+```php
+<?php
+	// create some Avatarer object
+ 	$avatar = Avatarer::make('Gravatar')->user( $email )->size('200');
+	$url = $avatar->get(new ToHtml);
+?>
+```
+
+If you want to have more controll over returned HTML code you can pass array with
+additional attributes via ``ToHtml()`` constructor, for examle:
+
+```php
+<?php
+	// create some Avatarer object
+ 	$avatar = Avatarer::make('Gravatar')->user( $email )->size('200');
+	$url = $avatar->get(
+		new ToHtml([
+			'class' => 'avatar',
+			'id' => 'user123' 
+		])
+	);
 ?>
 ```
