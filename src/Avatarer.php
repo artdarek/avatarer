@@ -8,7 +8,7 @@ class Avatarer {
 	 * Provider name
 	 * @var string
 	 */
-	private $_provider = 'Gravatar';
+	private $_provider;
 
 	/**
 	 * Avatarer instance
@@ -48,8 +48,8 @@ class Avatarer {
 	 */
 	public function createProviderInstance() 
 	{
-		$providerClass = __NAMESPACE__ . '\\Avatar\\Network\\'.$this->_provider;
-		$this->_avatarer = new $providerClass;
+		//$providerClass = __NAMESPACE__ . '\\Avatar\\Network\\'.$this->_provider;
+		$this->_avatarer = new $this->_provider;
 	}
 
 
