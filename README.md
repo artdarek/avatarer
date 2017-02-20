@@ -225,7 +225,7 @@ But if you want to get output in different format like Array, Json or even HTML 
 you can do that by calling ``get()`` method with Output object that implements 
 OutputInterface as a parameter:
 
-To get Array:
+To get Array (add ``use \Artdarek\Avatarer\Output\ToArray;`` at the top of your class):
 
 ```php
 <?php
@@ -235,7 +235,7 @@ To get Array:
 ?>
 ```
 
-To get JSON:
+To get JSON (add ``use \Artdarek\Avatarer\Output\ToJson;`` at the top of your class):
 
 ```php
 <?php
@@ -245,7 +245,7 @@ To get JSON:
 ?>
 ```
 
-To get Object:
+To get Object (add ``use \Artdarek\Avatarer\Output\ToObject;`` at the top of your class):
 
 ```php
 <?php
@@ -255,7 +255,7 @@ To get Object:
 ?>
 ```
 
-To get HTML:
+To get HTML (add ``use \Artdarek\Avatarer\Output\ToHtml;`` at the top of your class):
 
 ```php
 <?php
