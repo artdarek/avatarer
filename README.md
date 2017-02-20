@@ -5,8 +5,19 @@ Easy get avatars from social services like Facebook.com and Gravatar.com for Lar
 ---
 
 - [Installation](#installation)
+- [Supported Providers](#supported-providers)
 - [Registering the Package](#registering-the-package)
 - [Usage](#usage)
+- [Output Formating](#output-formating)
+
+## Supported Providers 
+
+A Provider can be a social network service that allows to get it's users avatars.
+As for right now we support:
+
+- Gravatar
+- Facebook
+- Twitter
 
 ## Installation 
 
@@ -48,7 +59,7 @@ Add the Avatarer alias into your config file ``config/app.php``:
 
 #### Initialize
 
-To ninitialize avatarer call make() method:
+To ninitialize avatarer call make() method and pass provider name (service name like Gravatar/Facebook/Twitter):
 
 ```php
 <?php
@@ -122,7 +133,7 @@ For Twitter we use user ScreenName:
 
 If you want to set a size of avatar that should be returned you can use ``size()`` method.
 This method can take two parameters ``width`` and ``height`` and both are optional 
-(notice that not ll services will require or use both width and height, for example 
+(notice that not all providers will require or use both width and height, for example 
 Gravatar expects only width).
 
 For Gravatar:
@@ -209,7 +220,9 @@ If thats more convinient for you you can chain all methods like below:
 ?>
 ```
 
-#### Formating output
+## Output Formating 
+
+#### Default string output
 
 With Avatarer by using ``get()`` method you can get url string of user avatar:
 
@@ -221,7 +234,9 @@ With Avatarer by using ``get()`` method you can get url string of user avatar:
 ?>
 ```
 
-But if you want to get output in different format like Array, Json or even HTML code
+#### Changing output format
+
+If you wish to get output in different format like Array, Json or even HTML code
 you can do that by calling ``get()`` method with Output object that implements 
 OutputInterface as a parameter:
 
