@@ -52,7 +52,7 @@ Add the Avatarer alias into your config file ``config/app.php``:
 
 ```php
 'aliases' => [
-    'Avatarer'    => Artdarek\Avatarer\Support\Laravel\Facades\Avatarer::class,
+    'Avatarer' => Artdarek\Avatarer\Support\Laravel\Facades\Avatarer::class,
 ],
 ```
 
@@ -60,36 +60,96 @@ Add the Avatarer alias into your config file ``config/app.php``:
 
 #### Initialize
 
-To ninitialize avatarer call make() method and pass provider name (service name like Gravatar/Facebook/Twitter):
+To ininitialize Avatarer call make() method and pass Provider name (service name like Gravatar/Facebook/Twitter):
 
 ```php
 <?php
+	use \Artdarek\Avatarer\Avatar\Provider\Gravatar;
+	...
 
-	// create avatarer object using Gravatar driver
- 	$gravatarAvatar = Avatarer::make('Gravatar');
+	// create avatarer object using Gravatar provider
+ 	$avatar = Avatarer::make(Gravatar::class);
+?>
+```
 
-	// create avatarer object using Facebook driver
- 	$facebookAvatar = Avatarer::make('Facebook');
+```php
+<?php
+	use \Artdarek\Avatarer\Avatar\Provider\Facebook;
+	...
 
-	// create avatarer object using Twitter driver
- 	$twitterAvatar = Avatarer::make('Twitter');
+	// create avatarer object using Facebook provider
+ 	$avatar = Avatarer::make(Facebook::class);
+?>
+```
+
+```php
+<?php
+	use \Artdarek\Avatarer\Avatar\Provider\Twitter;
+	...
+
+	// create avatarer object using Gravatar provider
+ 	$avatar = Avatarer::make(Twitter::class);
+?>
+```
+
+If you want to use Avatarer library outside of Laravel framework or you 
+don't want to use ``Avatarer Facade`` in your Laravel application, you can do this:
+
+```php
+<?php
+	use \Artdarek\Avatarer\Avatar\Provider\Gravatar;
+	...
+
+	// create avatarer object
+ 	$avatar = new \Artdarek\Avatarer\Avatarer;
+ 	$avatar->make(Gravatar::class);
+?>
+```
+
+or
+
+```php
+<?php
+	use \Artdarek\Avatarer\Avatar\Provider\Gravatar;
+	...
+
+	// create avatarer object
+ 	$avatar = (new \Artdarek\Avatarer\Avatarer)->make(Gravatar::class);
+?>
+```
+
+or 
+
+```php
+<?php
+	use \Artdarek\Avatarer\Avatarer;
+	use \Artdarek\Avatarer\Avatar\Provider\Gravatar;
+	...
+
+	// create avatarer object
+ 	$avatar = (new Avatarer)->make(Gravatar::class);
 ?>
 ```
 
 #### Setting a user
 
 Generating avatar with default settings is very simple and all you have to do is to call
-``user()`` method with user id as a parameter (can be email/id/screenname):
+``user()`` method with user id as a parameter (each Provider can identify user differently 
+via email/id/screenname etc.):
 
 For Gravatar we use Email:
 
 ```php
 <?php
+
+	use \Artdarek\Avatarer\Avatar\Provider\Gravatar;
+	...
+
 	// user email
 	$email = "example@user.email";
 
 	// create avatarer object
- 	$avatar = Avatarer::make('Gravatar');
+ 	$avatar = Avatarer::make(Gravatar::class);
  	$avatar->user( $email );
 
 	// get url
@@ -102,11 +162,14 @@ For Facebook we use UserID:
 
 ```php
 <?php
+	use \Artdarek\Avatarer\Avatar\Provider\Facebook;
+	...
+
 	// user id
 	$userID = "838979896180389";
 
 	// create avatarer object
- 	$avatar = Avatarer::make('Facebook');
+ 	$avatar = Avatarer::make(Facebook::class);
  	$avatar->user( $userID );
 
 	// get url
@@ -118,11 +181,14 @@ For Twitter we use user ScreenName:
 
 ```php
 <?php
+	use \Artdarek\Avatarer\Avatar\Provider\Twitter;
+	...
+
 	// user id
 	$userScreenName = "artdarek";
 
 	// create avatarer object
- 	$avatar = Avatarer::make('Twitter');
+ 	$avatar = Avatarer::make(Twitter::class);
  	$avatar->user( $userScreenName );
 
 	// get url
@@ -141,8 +207,8 @@ For Gravatar:
 
 ```php
 <?php
-	// create a gravatar object for specified email
- 	$avatar = Avatarer::make('Gravatar');
+	// create avatarer object
+ 	$avatar = Avatarer::make(Gravatar::class);
  	$avatar->user( $email );
  	$avatar->size( 200 );
 
@@ -155,8 +221,8 @@ For Facebook:
 
 ```php
 <?php
-	// create a gravatar object for specified email
- 	$avatar = Avatarer::make('Facebook');
+	// create avatarer object
+ 	$avatar = Avatarer::make(Facebook::class);
  	$avatar->user( $userID );
  	$avatar->size( 200, 200 );
 
@@ -174,8 +240,8 @@ For Gravatar:
 
 ```php
 <?php
-	// create a gravatar object for specified email
- 	$avatar = Avatarer::make('Gravatar');
+	// create avatarer object
+ 	$avatar = Avatarer::make(Gravatar::class);
  	$avatar->user( $email );
  	$avatar->size( 200 );
  	$avatar->options([
@@ -193,15 +259,12 @@ For Facebook:
 
 ```php
 <?php
-	// create a gravatar object for specified email
- 	$avatar = Avatarer::make('Facebook');
+ 	$avatar = Avatarer::make(Facebook::class);
  	$avatar->user( $userID );
  	$avatar->size( 200, 200 );
  	$avatar->options([
  		'type' => 'square', // Type of avatar [ small, normal, album, large, square ]
  	]);
-
-	// get url
 	$url = $avatar->get();
 ?>
 ```
@@ -211,7 +274,7 @@ If thats more convinient for you you can chain all methods like below:
 
 ```php
 <?php
- 	$url = Avatarer::make('Gravatar')
+ 	$url = Avatarer::make(Gravatar::class)
  		->user( $email )
  		->size(220)
  		->options([
@@ -229,8 +292,7 @@ With Avatarer by using ``get()`` method you can get url string of user avatar:
 
 ```php
 <?php
-	// create some Avatarer object
- 	$avatar = Avatarer::make('Gravatar')->user( $email )->size('200');
+ 	$avatar = Avatarer::make(Gravatar::class)->user( $email )->size('200');
 	$url = $avatar->get();
 ?>
 ```
@@ -245,8 +307,11 @@ To get Array (add ``use \Artdarek\Avatarer\Output\ToArray;`` at the top of your 
 
 ```php
 <?php
-	// create some Avatarer object
- 	$avatar = Avatarer::make('Gravatar')->user( $email )->size('200');
+	use \Artdarek\Avatarer\Avatar\Provider\Gravatar;
+    use \Artdarek\Avatarer\Output\ToArray;
+    ...
+
+ 	$avatar = Avatarer::make(Gravatar::cass)->user( $email )->size('200');
 	$url = $avatar->get(new ToArray);
 ?>
 ```
@@ -255,8 +320,11 @@ To get JSON (add ``use \Artdarek\Avatarer\Output\ToJson;`` at the top of your cl
 
 ```php
 <?php
-	// create some Avatarer object
- 	$avatar = Avatarer::make('Gravatar')->user( $email )->size('200');
+	use \Artdarek\Avatarer\Avatar\Provider\Gravatar;
+    use \Artdarek\Avatarer\Output\ToJson;
+    ...
+
+ 	$avatar = Avatarer::make(Gravatar::cass)->user( $email )->size('200');
 	$url = $avatar->get(new ToJson);
 ?>
 ```
@@ -265,8 +333,11 @@ To get Object (add ``use \Artdarek\Avatarer\Output\ToObject;`` at the top of you
 
 ```php
 <?php
-	// create some Avatarer object
- 	$avatar = Avatarer::make('Gravatar')->user( $email )->size('200');
+	use \Artdarek\Avatarer\Avatar\Provider\Gravatar;
+    use \Artdarek\Avatarer\Output\ToObject;
+    ...
+
+ 	$avatar = Avatarer::make(Gravatar::cass)->user( $email )->size('200');
 	$url = $avatar->get(new ToObject);
 ?>
 ```
@@ -275,8 +346,11 @@ To get HTML (add ``use \Artdarek\Avatarer\Output\ToHtml;`` at the top of your cl
 
 ```php
 <?php
-	// create some Avatarer object
- 	$avatar = Avatarer::make('Gravatar')->user( $email )->size('200');
+	use \Artdarek\Avatarer\Avatar\Provider\Gravatar;
+    use \Artdarek\Avatarer\Output\ToHtml;
+    ...
+
+ 	$avatar = Avatarer::make(Gravatar::cass)->user( $email )->size('200');
 	$url = $avatar->get(new ToHtml);
 ?>
 ```
@@ -286,8 +360,11 @@ additional attributes via ``ToHtml()`` constructor, for examle:
 
 ```php
 <?php
-	// create some Avatarer object
- 	$avatar = Avatarer::make('Gravatar')->user( $email )->size('200');
+	use \Artdarek\Avatarer\Avatar\Provider\Gravatar;
+    use \Artdarek\Avatarer\Output\ToHtml;
+    ...
+
+ 	$avatar = Avatarer::make(Gravatar::cass)->user( $email )->size('200');
 	$url = $avatar->get(
 		new ToHtml([
 			'class' => 'avatar',

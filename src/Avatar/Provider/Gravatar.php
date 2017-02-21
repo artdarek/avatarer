@@ -1,6 +1,6 @@
 <?php 
 
-namespace Artdarek\Avatarer\Avatar\Network;
+namespace Artdarek\Avatarer\Avatar\Provider;
 
 use \Artdarek\Avatarer\Avatar\AvatarInterface;
 use \Artdarek\Avatarer\Avatar\AvatarAbstract;
