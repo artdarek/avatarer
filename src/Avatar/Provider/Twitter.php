@@ -24,7 +24,6 @@ class Twitter extends AvatarAbstract implements AvatarInterface {
 	protected function endpoint()
 	{
 		$endpoint = 'https://twitter.com/'.strtolower( trim( $this->_id ) ).'/profile_image';
-		// $endpoint = 'https://www.gravatar.com/avatar/'.md5( strtolower( trim( $this->_id ) ) );
 		return $endpoint;
 	}
 
@@ -35,7 +34,6 @@ class Twitter extends AvatarAbstract implements AvatarInterface {
 	 */
 	protected function make()
 	{
-
 	    // size
 	    $params['size'] = ($this->_options['size'] !== null) ? $this->_options['size'] : $this->_size_mapper();
 
